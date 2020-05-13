@@ -1,4 +1,4 @@
-# FastAndYours Dashboard API
+# Fast&Yours Dashboard API
 
 > Backend API for Fast and Yours invoice management application.
 
