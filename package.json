@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.13",
     "morgan": "^1.10.0",
+    "node-geocoder": "^3.27.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
