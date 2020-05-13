@@ -1,10 +1,15 @@
 const express = require('express');
+const {
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
+} = require('../../controllers/users');
+
 const router = express.Router();
 
-// @route   GET api/users
-// @desc    Test route
-// @access  Public
 router.route('/')
-    .get((req, res) => res.send('Users route'));
+    .post(createUser);
 
 module.exports = router;
