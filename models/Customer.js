@@ -35,7 +35,10 @@ const CustomerSchema = new mongoose.Schema({
     zipcode: String,
     country: String,
   },
-  companyId: String,
+  companyId: {
+    type: String,
+    required: [true, 'Please add a company ID']
+  },
   createdAt: {
     type: Date,
     default: Date.now

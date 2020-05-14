@@ -1,6 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Invoice = require('../models/Invoice');
+const Customer = require('../models/Customer');
 
 // @desc    Get all invoices
 // @route   GET /api/v1/invoices
@@ -46,6 +47,23 @@ exports.getInvoice = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/invoices
 // @access  Private - Admin
 exports.createInvoice = asyncHandler(async (req, res, next) => {
+  // Find customer and populate customerDetails
+  const customer = await Customer.findOne({ _id: req.body.customer });
+
+  if(!customer) {
+    return next(
+        new ErrorResponse(`Customer not found with ID of ${req.body.customer}`, 404)
+    );
+  }
+
+  const { name, email, location, companyId } = customer;
+  req.body.customerDetails = {
+    name,
+    email,
+    location,
+    companyId
+  };
+
   const invoice = await Invoice.create(req.body);
 
   res.status(201).json({ success: true, data: invoice });

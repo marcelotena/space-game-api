@@ -6,6 +6,31 @@ const InvoiceSchema = new mongoose.Schema({
     ref: 'Customer',
     required: true
   },
+  customerDetails: {
+    name: String,
+    email: String,
+    location: {
+      // GeoJSON Point
+      type: {
+        type: String,
+        enum: ['Point'],
+      },
+      coordinates: {
+        type: [Number],
+        index: '2dsphere'
+      },
+      formattedAddress: String,
+      street: String,
+      city: String,
+      state: String,
+      zipcode: String,
+      country: String,
+    },
+    companyId: {
+      type: String,
+      required: [true, 'Please add a company ID']
+    }
+  },
   issuer: {
     //Todo: Create issuer model,
     // type: mongoose.Schema.ObjectId,
@@ -15,6 +40,8 @@ const InvoiceSchema = new mongoose.Schema({
   invoiceName: {
     type: String,
     required: [true, 'Please add an invoice name (i.e.: FV-1)'],
+    unique: true,
+    maxlength: [50, 'Name can not be more than 50 characters']
   },
   items: [
     {
