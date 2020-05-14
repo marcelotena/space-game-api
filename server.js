@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
@@ -22,6 +23,26 @@ const invoices = require('./routes/api/invoices');
 
 const app = express();
 app.get('/', (req, res) => res.send('API Running'));
+
+// Enable CORS
+const allowedOrigins = ['http://localhost:3000',
+  'https://fy-next-app.now.sh/'];
+app.use(cors({
+  origin: function(origin, callback){
+
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, true);
+
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+          'allow access from the specified Origin.';
+
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Body parser
 app.use(express.json());
