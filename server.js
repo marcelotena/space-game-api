@@ -18,6 +18,7 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const customers = require('./routes/api/customers');
+const invoices = require('./routes/api/invoices');
 
 const app = express();
 app.get('/', (req, res) => res.send('API Running'));
@@ -39,6 +40,7 @@ app.use('/api/v1/users', users);
 app.use('/api/v1/profile', profile);
 app.use('/api/v1/posts', posts);
 app.use('/api/v1/customers', customers);
+app.use('/api/v1/invoices', invoices);
 
 app.use(errorHandler);
 

@@ -46,9 +46,6 @@ exports.getInvoice = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/invoices
 // @access  Private - Admin
 exports.createInvoice = asyncHandler(async (req, res, next) => {
-  // Add customer to req.body
-  req.body.customer = req.customer.id;
-
   const invoice = await Invoice.create(req.body);
 
   res.status(201).json({ success: true, data: invoice });
