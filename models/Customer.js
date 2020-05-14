@@ -40,6 +40,9 @@ const CustomerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
 // Geocode & create location field
@@ -59,6 +62,14 @@ CustomerSchema.pre('save', async function(next) {
   // Do not save address in DB
   this.address = undefined;
   next();
+});
+
+// Reverse populate with virtuals
+CustomerSchema.virtual('user', {
+  ref: 'User',
+  localField: '_id',
+  foreignField: 'customer',
+  justOne: true
 });
 
 module.exports = mongoose.model('Customer', CustomerSchema);

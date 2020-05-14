@@ -18,8 +18,8 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'publisher'],
-    default: 'user'
+    enum: ['customer', 'developer'],
+    default: 'customer'
   },
   password: {
     type: String,
@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  customer: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Customer'
+  },
   createdAt: {
     type: Date,
     default: Date.now

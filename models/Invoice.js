@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const InvoiceSchema = new mongoose.Schema({
   customer: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: 'Customer',
     required: true
   },
   issuer: {
     //Todo: Create issuer model,
-    // type: Schema.Types.ObjectId,
+    // type: mongoose.Schema.ObjectId,
     // ref: 'Issuer',
     // required: true
   },
