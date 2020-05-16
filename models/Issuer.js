@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const geocoder = require('../utils/geocoder');
 
-const CustomerSchema = new mongoose.Schema({
+const IssuerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please enter your name']
@@ -43,13 +43,10 @@ const CustomerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-}, {
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
 });
 
 // Geocode & create location field
-CustomerSchema.pre('save', async function(next) {
+IssuerSchema.pre('save', async function(next) {
   const loc = await geocoder.geocode(this.address);
   this.location = {
     type: 'Point',
@@ -65,12 +62,4 @@ CustomerSchema.pre('save', async function(next) {
   next();
 });
 
-// Reverse populate with virtuals
-CustomerSchema.virtual('user', {
-  ref: 'User',
-  localField: '_id',
-  foreignField: 'customer',
-  justOne: true
-});
-
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('Issuer', IssuerSchema);
