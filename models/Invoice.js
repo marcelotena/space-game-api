@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const colors = require('colors');
 
 const InvoiceSchema = new mongoose.Schema({
   customer: {
@@ -26,10 +27,7 @@ const InvoiceSchema = new mongoose.Schema({
       zipcode: String,
       country: String,
     },
-    companyId: {
-      type: String,
-      required: [true, 'Please add a company ID']
-    }
+    companyId: String
   },
   issuer: {
     //Todo: Create issuer model,
@@ -50,6 +48,17 @@ const InvoiceSchema = new mongoose.Schema({
       base: Number
     }
   ],
+  baseAmount: {
+    type: Number,
+    default: function() {
+      if (this.items) {
+        return this.items.reduce((prev, cur) => {
+          return prev + cur.base * cur.quantity;
+        }, 0);
+      }
+      return 0;
+    }
+  },
   invoiceTax: {
     type: Number,
     default: 21
