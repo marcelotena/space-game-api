@@ -25,8 +25,7 @@ const app = express();
 app.get('/', (req, res) => res.send('API Running'));
 
 // Enable CORS
-const allowedOrigins = ['http://localhost:3000',
-  'https://fy-next-app.now.sh/'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS;
 app.use(cors({
   origin: function(origin, callback){
 
