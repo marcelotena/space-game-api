@@ -67,11 +67,11 @@ PlanetSchema.pre('save', async function(next) {
 });
 
 // Reverse populate with virtuals
-PlayerSchema.virtual('player', {
+PlanetSchema.virtual('player', {
   ref: 'Player',
   localField: '_id',
   foreignField: 'planet',
   justOne: true
 });
 
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('Planet', PlanetSchema);
