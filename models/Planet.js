@@ -48,13 +48,14 @@ const PlanetSchema = new mongoose.Schema({
       max: 15
     },
   },
+  colonisedBy: {
+    type: mongoose.Schema.ObjectId, // Populate on colonisation or player creation
+    ref: 'Player'
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
-}, {
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
 });
 
 // Generate planet type fields before saving
@@ -64,14 +65,6 @@ PlanetSchema.pre('save', async function(next) {
   this.planetType = type;
 
   next();
-});
-
-// Reverse populate with virtuals
-PlanetSchema.virtual('player', {
-  ref: 'Player',
-  localField: '_id',
-  foreignField: 'planet',
-  justOne: true
 });
 
 module.exports = mongoose.model('Planet', PlanetSchema);
