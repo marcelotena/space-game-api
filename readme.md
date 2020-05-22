@@ -1,6 +1,6 @@
-# Fast&Yours Dashboard API
+# SpaceGame API
 
-> Backend API for Fast and Yours invoice management application.
+> Backend API for Real-time Strategy Online Game.
 
 ## Usage
 

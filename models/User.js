@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please enter your name']
+    required: [true, 'Please enter your game alias']
   },
   email: {
     type: String,
@@ -18,8 +18,8 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['customer', 'developer'],
-    default: 'customer'
+    enum: ['player'],
+    default: 'player'
   },
   password: {
     type: String,
@@ -32,9 +32,9 @@ const UserSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
-  customer: {
+  player: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Customer'
+    ref: 'Player'
   },
   createdAt: {
     type: Date,

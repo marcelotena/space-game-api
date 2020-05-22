@@ -1,7 +1,7 @@
 {
-  "name": "fy-api-2020",
+  "name": "space-game-api",
   "version": "1.0.0",
-  "description": "Client dashboard with billing and services",
+  "description": "Backend API for a RTS Online Game",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -22,11 +22,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.13",
     "morgan": "^1.10.0",
-    "node-geocoder": "^3.27.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0",
     "nodemon": "^2.0.3"
   }
 }
