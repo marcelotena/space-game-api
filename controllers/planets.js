@@ -2,6 +2,7 @@ const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Planet = require('../models/Planet');
+const planetType = require('./helpers/planetFunctions');
 
 // @desc    Get all planets
 // @route   GET /api/v1/planets
@@ -29,6 +30,9 @@ exports.getPlanet = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/planets
 // @access  Private
 exports.createPlanet = asyncHandler(async (req, res, next) => {
+  const planetInfo = new planetType(req.body.coordinates.position);
+  req.body.planetInfo = await planetInfo.generatePlanet();
+
   const planet = await Planet.create(req.body);
 
   res.status(201).json({ success: true, data: planet });
@@ -71,11 +75,11 @@ exports.deletePlanet = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure player is planet owner
-  if(planet.colonisedBy.toString() !== req.user.player.id && req.user.role !== 'admin') {
+  /*if(planet.colonisedBy.toString() !== req.user.player.id && req.user.role !== 'admin') {
     return next(
         new ErrorResponse(`Player ${req.user.player.id} is not authorized to delete this planet`, 401)
     );
-  }
+  }*/
 
   planet.remove();
 

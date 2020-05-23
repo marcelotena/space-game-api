@@ -1,34 +1,23 @@
 const mongoose = require('mongoose');
-const Planet = require('planetFunctions');
 
 const PlanetSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please enter your name']
-  },
-  email: {
-    type: String,
-    unique: true,
-    match: [
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Please add a valid email'
-    ]
-  },
-  address: {
-    type: String,
-    required: [true, 'Please add an address']
-  },
-  planetType: {
-    code: {
-      type: String,
-      enum: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+  name: String,
+  planetInfo: { // Planet type
+    planetType: {
+      code: {
+        type: String,
+        enum: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+      },
+      name: {
+        type: String,
+        enum: ['desert', 'dry', 'normal', 'jungle', 'oceanic', 'ice', 'gas']
+      }
     },
-    name: {
-      type: String,
-      enum: ['desert', 'dry', 'normal', 'jungle', 'oceanic', 'ice', 'gas']
-    }
+    usedSlots: Number,
+    slots: Number,
+    imageSystem: String
   },
-  coordinates: {
+  coordinates: { // Planet position
     galaxy: {
       type: Number,
       required: [true, 'Please enter a Galaxy number between 1 and 5'],
@@ -48,7 +37,30 @@ const PlanetSchema = new mongoose.Schema({
       max: 15
     },
   },
-  colonisedBy: {
+  resources: { // Resources
+    metal: {
+      type: Number,
+      default: 1000
+    },
+    crystal: {
+      type: Number,
+      default: 1000
+    },
+    deuterium: {
+      type: Number,
+      default: 0
+    },
+  },
+  buildings: { // Building levels
+    metalMine: Number,
+    solarPlant: Number,
+    crystalMine: Number,
+    deuteriumSynthesizer: Number,
+    metalStorage: Number,
+    crystalStorage: Number,
+    deuteriumTank: Number
+  },
+  colonisedBy: { // Planet owner (if colonised)
     type: mongoose.Schema.ObjectId, // Populate on colonisation or player creation
     ref: 'Player'
   },
@@ -56,14 +68,6 @@ const PlanetSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
-
-// Generate planet type fields before saving
-PlanetSchema.pre('save', async function(next) {
-  const planetInfo = new Planet(this.coordinates.position);
-  this.planetType = planetInfo.generatePlanet();
-
-  next();
 });
 
 module.exports = mongoose.model('Planet', PlanetSchema);

@@ -1,4 +1,4 @@
-const getRndInteger = require("../utils/math");
+const math = require("../../utils/math");
 
 class Planet {
   constructor(position) {
@@ -40,13 +40,13 @@ class Planet {
   }
 
   generatePlanetType(arraystart, arrayend) {
-    const index = getRndInteger(arraystart, arrayend);
+    const index = math.getRndInteger(arraystart, arrayend);
 
     return this.planetTypes[index];
   }
 
   generatePlanetImage() {
-    let number = getRndInteger(1, 5); // 1 - 5
+    let number = math.getRndInteger(1, 5); // 1 - 5
     return '0' + number;
   }
 
