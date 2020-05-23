@@ -61,8 +61,7 @@ const PlanetSchema = new mongoose.Schema({
 // Generate planet type fields before saving
 PlanetSchema.pre('save', async function(next) {
   const planetInfo = new Planet(this.coordinates.position);
-  const type = planetInfo.generatePlanet();
-  this.planetType = type;
+  this.planetType = planetInfo.generatePlanet();
 
   next();
 });
