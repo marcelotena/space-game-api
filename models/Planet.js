@@ -13,8 +13,8 @@ const PlanetSchema = new mongoose.Schema({
         enum: ['desert', 'dry', 'normal', 'jungle', 'oceanic', 'ice', 'gas']
       }
     },
-    usedSlots: Number,
-    slots: Number,
+    usedFields: Number,
+    fields: Number,
     imageSystem: String
   },
   coordinates: { // Planet position
