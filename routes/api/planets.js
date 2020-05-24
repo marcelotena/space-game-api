@@ -22,7 +22,8 @@ const { protect, authorize } = require('../../middleware/auth');
 
 router
     .route('/')
-    .get(advancedResults(Planet, 'colonisedBy'), getPlanets)
+    //.get(advancedResults(Planet, 'colonisedBy'), getPlanets)
+    .get(advancedResults(Planet), getPlanets)
     .post(protect, authorize('admin'), createPlanet);
 
 router
