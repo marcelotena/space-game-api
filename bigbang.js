@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Add planets to DB
-const galaxies = 1;
+const galaxies = 3;
 const systems = 10;
 const positions = 15;
 
