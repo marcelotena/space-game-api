@@ -6,6 +6,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+const http = require('http');
+const socketio = require('socket.io');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -20,6 +22,18 @@ const planets = require('./routes/api/planets');
 
 const app = express();
 app.get('/', (req, res) => res.send('API Running'));
+
+const server = http.createServer(app);
+const io = socketio(server);
+
+// Run when a client connects
+io.on('connection', socket => {
+  console.log('New user connection...');
+
+  socket.on('disconnect', () => {
+    console.log('User has left the chat.');
+  });
+});
 
 // Enable CORS
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
@@ -60,4 +74,4 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`.cyan));
+server.listen(PORT, () => console.log(`Server started on port ${PORT}`.cyan));

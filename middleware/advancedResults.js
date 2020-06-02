@@ -66,10 +66,14 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     }
   }
 
+  // Server current date
+  const currentServerDate = Date.now();
+
   res.advancedResults = {
     success: true,
     count: results.length,
     pagination,
+    serverDate: currentServerDate,
     data: results
   };
 
