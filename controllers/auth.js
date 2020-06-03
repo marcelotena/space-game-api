@@ -37,6 +37,10 @@ exports.register = asyncHandler(async (req, res, next) => {
   // Create token
   const token = user.getSignedJwtToken();
 
+  // Create player
+
+  // Create terrestrial-type planet in random coordinates
+
   res.status(201).json({
     success: true,
     token
